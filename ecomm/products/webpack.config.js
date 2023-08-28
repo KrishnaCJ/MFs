@@ -5,13 +5,19 @@ module.exports = {
   mode: "development",
   devServer: {
     port: 8081,
+    allowedHosts: ["localhost", ".gitpod.io"],
   },
   plugins: [
     new ModuleFederationPlugin({
       name: "products",
-      fileName: "remoteEntry.js",
+      filename: "remoteEntry.js",
       exposes: {
-        "./ProductsIndex": "./src/index",
+        "./ProductsIndex": "./src/bootstrap",
+      },
+      shared: {
+        faker: {
+          singleton: true,
+        },
       },
     }),
     new HtmlWebpackPlugin({
